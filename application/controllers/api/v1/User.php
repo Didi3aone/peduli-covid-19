@@ -80,14 +80,14 @@ class User extends RestController {
         
         $userId = $this->db->get_where('users',['employee_id' => $employee_id])->row();
 
-        if( $suhu >= '38.2' ) {
+        if( $suhu >= '38.2' OR $suhu > '38.2') {
             $suhuTinggi = "SELECT 
                             ketentuan.id,
                             ketentuan.rekomendasi,
                             zona_status.status as zona
                         from ketentuan 
                         join zona_status on zona_status.id = ketentuan.zona_status_id
-                        where suhu_start = $suhu and zona_status_id = $zonaStatus ";
+                        where suhu_start >= '38.2' and suhu_start <= $suhu and zona_status_id = $zonaStatus ";
             $dataSuhu = $this->db->query($suhuTinggi)->row();
             $this->db->insert('daily_check_suhu',[
                 'id' => strtoupper($this->uuid->v4()),
@@ -99,6 +99,7 @@ class User extends RestController {
                 'updated_at'   => date('Y-m-d H:i:s'),
             ]);
         } else {
+
             $suhuRendah = "SELECT 
                                 ketentuan.id,
                                 ketentuan.rekomendasi,
