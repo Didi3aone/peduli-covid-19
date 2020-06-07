@@ -101,6 +101,11 @@ class User extends RestController {
                 'created_at'   => date('Y-m-d H:i:s'),
                 'updated_at'   => date('Y-m-d H:i:s'),
             ]);
+        } elseif($suhu < '34' or $suhu <= '34.0') {
+            $this->response( [
+                'status'   => '500',
+                'message'  => 'Cek kembali inputan anda'
+            ], 500 );
         } else {
 
             $suhuRendah = "SELECT 
