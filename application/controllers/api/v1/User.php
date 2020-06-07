@@ -18,12 +18,12 @@ class User extends RestController {
 
         if( empty($all) ) {
             $this->response( [
-                'status' => 404,
+                'status' => '404',
                 'message' => 'Data kosong'
             ], 404 );
         } else {
             $this->response( [
-                'status' => 200,
+                'status' => '200',
                 'data' => $all
             ], 200 );
         }
