@@ -34,6 +34,11 @@
                         <li><a href="<?= site_url('report'); ?>">list</a></li>
                     </ul>
                 </li>
+                <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="fa fa-photo"></i><span class="hide-menu">Informasi</span></a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li><a href="<?= site_url('informasi'); ?>">list</a></li>
+                    </ul>
+                </li>
                 <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="fa fa-user"></i><span class="hide-menu">Manage User</span></a>
                     <ul aria-expanded="false" class="collapse">
                         <li><a href="<?= site_url('user'); ?>">User list</a></li>
