@@ -58,9 +58,12 @@ class User extends RestController {
 
    public function checkSuhu_post()
    {
-       $suhu        = $this->post('suhu');
-       $zona        = $this->post('zona');
-       $employee_id = $this->post('employee_id');
+        $suhu        = $this->post('suhu');
+        $zona        = $this->post('zona');
+        $employee_id = $this->post('employee_id');
+        
+        //update hit
+        updateHitApiSuhu();
 
         if( $suhu == '' ) {
             $this->response( [
