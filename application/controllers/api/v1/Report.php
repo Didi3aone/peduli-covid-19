@@ -1,40 +1,25 @@
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
+use chriskacerguis\RestServer\RestController;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
 
-class Report extends CI_Controller {
+class Report extends RestController {
 
-    public function __construct()
+    function __construct()
     {
+        // Construct the parent class
         parent::__construct();
-        $this->load->model('Report_model'); // di load modelnya
-        $this->data = [];
-        //cek udah login belum usernya
-        if($this->session->userdata('is_login') == false ) {
-            redirect('login');
-        }
-
-        $this->load->library('Excel');
+        $this->load->model('Report_model');
     }
 
-    public function index()
-    {
-        $this->data['breadcrumb'] = "Report";
-
-        $this->load->view('header', $this->data);
-        $this->load->view('report/index', $this->data);
-        $this->load->view('footer');
-    }
-
-    public function export()
+    public function export_post()
     {
         $params = [];
-        $params['start_date'] = $this->input->post('start_date');
-        $params['end_date']   = $this->input->post('end_date');
+        $params['start_date'] = $this->post('start_date');
+        $params['end_date']   = $this->post('end_date');
 
         $report = $this->Report_model->getReportCheckSuhu($params);
 
@@ -88,6 +73,14 @@ class Report extends CI_Controller {
         header('Pragma: public'); // HTTP/1.0
 
         $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
-        $writer->save('php://output');
-    }
+        $writer->save('assets/generate-file/excel/'.$fileName.".xlsx");
+
+        $this->response( [
+            'status'  => '200',
+            'data'    => [
+                'fileName' => $fileName.".xlsx",
+                'linkPath' => base_url()."assets/generate-file/excel/".$fileName.".xlsx"
+            ]  
+        ], 200 );
+     }
 }
