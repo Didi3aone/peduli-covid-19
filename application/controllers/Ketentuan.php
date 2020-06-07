@@ -32,6 +32,17 @@ class Ketentuan extends CI_Controller {
         $this->load->view('footer');
     }
 
+
+    public function edit($id)
+    {
+        $this->data['zona'] = $this->db->get('zona_status')->result();
+        $this->data['ketentuan'] = $this->Ketentuan_model->getbyId($id);
+
+        $this->load->view('header');
+        $this->load->view('ketentuan/edit',$this->data);
+        $this->load->view('footer');
+    }
+
     public function store()
     {
         $request = $this->input->post();
@@ -44,6 +55,19 @@ class Ketentuan extends CI_Controller {
         $insert = $this->Ketentuan_model->insertdata($request);
 
         $this->session->set_flashdata('success','Insert data success');
+
+        redirect('ketentuan');
+    }
+
+    public function update()
+    {
+        $request = $this->input->post();
+        $request['updated_at'] = date('Y-m-d H:i:s');
+        $request['updated_by'] = $this->session->userdata('id');
+
+        $update = $this->Ketentuan_model->updateData($request, ['id' => $request['id']]);
+
+        $this->session->set_flashdata('success','Update data success');
 
         redirect('ketentuan');
     }

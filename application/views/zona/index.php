@@ -3,7 +3,7 @@
         <div class="card">
             <div class="card-body">
                 <h6 class="card-subtitle">
-                    <a class="btn btn-success" href=""><i class="fa fa-plus"></i> Add</a>
+                    <a class="btn btn-success" href="<?= site_url('zona/create') ?>"><i class="fa fa-plus"></i> Add</a>
                     <a class="btn btn-primary" href="#" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="fa fa-download"></i> Import</a>
                 </h6>
                 <div class="table-responsive m-t-40">
@@ -29,7 +29,11 @@
                                 <td style="background-color:<?= $rows->color ?>;"></td>
                                 <td><?= $rows->valid_from ?></td>
                                 <td><?= $rows->valid_to ?></td>
-                                <td></td>
+                                <td>
+                                    <a class="btn btn-primary btn-xs" href="<?= site_url('zona/edit/'.$rows->id) ?>">
+                                        <i class="fa fa-pencil"></i> Edit
+                                    </a>
+                                </td>
                             </tr>
                             <?php endforeach; ?>
                         </tbody>
@@ -56,6 +60,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger waves-effect text-left" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary waves-effect text-left">Import</button>
+                    <a href="<?= base_url('assets/template/zona_template.xlsx') ?>" class="btn btn-success waves-effect text-left">Download template Import</a>
                 </div>
             </form>
         </div>

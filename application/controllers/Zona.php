@@ -28,6 +28,76 @@ class Zona extends CI_Controller {
         $this->load->view('footer');
     }
 
+    public function create()
+    {
+        $this->data['breadcrumb'] = "Zona";
+        $this->data['status']     = $this->db->get('zona_status')->result();
+
+        $this->load->view('header', $this->data);
+        $this->load->view('zona/create', $this->data);
+        $this->load->view('footer');
+    }
+
+    public function edit($id)
+    {
+        $this->data['breadcrumb'] = "Zona";
+        $this->data['status']     = $this->db->get('zona_status')->result();
+        $this->data['zona']       = $this->Zona_model->getbyId($id);
+
+        $this->load->view('header', $this->data);
+        $this->load->view('zona/edit', $this->data);
+        $this->load->view('footer');
+    }
+
+    public function store()
+    {
+        $request = $this->input->post();
+
+        if( $request['zona_status'] == 'Hijau' ) {
+            $color = "green";
+        } else if( $request['zona_status'] == 'Merah' ) {
+            $color = "red";
+        } else if($request['zona_status'] == 'Kuning') {
+            $color = "yellow";
+        }
+        
+        $request['id']         = strtoupper($this->uuid->v4());
+        $request['color']      = $color;
+        $request['created_at'] = date('Y-m-d H:i:s');
+        $request['updated_at'] = date('Y-m-d H:i:s');
+        $request['created_by'] = $this->session->userdata('id');
+        $request['updated_by'] = $this->session->userdata('id');
+
+        $insert = $this->Zona_model->insertData($request);
+
+        $this->session->set_flashdata('success','Insert data success');
+
+        redirect('zona');
+    }
+
+    public function update()
+    {
+        $request = $this->input->post();
+
+         if( $request['zona_status'] == 'Hijau' ) {
+            $color = "green";
+        } else if( $request['zona_status'] == 'Merah' ) {
+            $color = "red";
+        } else if($request['zona_status'] == 'Kuning') {
+            $color = "yellow";
+        }
+        
+        $request['color']      = $color;
+        $request['updated_at'] = date('Y-m-d H:i:s');
+        $request['updated_by'] = $this->session->userdata('id');
+
+        $insert = $this->Zona_model->updateData($request, ['id' => $request['id']]);
+
+        $this->session->set_flashdata('success','Update data success');
+
+        redirect('zona');
+    }
+
     public function import()
     {
         $fileName = $_FILES['file']['name'];
@@ -66,7 +136,7 @@ class Zona extends CI_Controller {
             $data = array(
                 "id"                    => strtoupper($this->uuid->v4()),
                 "address"               => $rowData[0][0],
-                "zona_status"           => $rowData[0][1],
+                "zona_status"           => ucfirst($rowData[0][1]),
                 "color"                 => $rowData[0][2],
                 "valid_from"            => date('Y-m-d'),
                 "valid_to"              => date('Y-m-30'),

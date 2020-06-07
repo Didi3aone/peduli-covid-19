@@ -37,6 +37,7 @@
                 <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="fa fa-user"></i><span class="hide-menu">Manage User</span></a>
                     <ul aria-expanded="false" class="collapse">
                         <li><a href="<?= site_url('user'); ?>">User list</a></li>
+                        <li><a href="<?= site_url('divisi'); ?>">Divisi list</a></li>
                     </ul>
                 </li>
             </ul>

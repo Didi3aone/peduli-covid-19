@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Zona_model extends CI_Model {
+class Divisi_model extends CI_Model {
     
     public function __construct() {
         parent::__construct();
@@ -10,7 +10,7 @@ class Zona_model extends CI_Model {
     public function ambilSemuaData()
     {
         $this->db->select('*');
-        $this->db->from('zona');
+        $this->db->from('divisi');
         $hasil = $this->db->get();
         return $hasil->result();
     }
@@ -18,18 +18,24 @@ class Zona_model extends CI_Model {
     public function getbyId($id)
     {
         $this->db->where('id', $id);
-        $res = $this->db->get('zona');
+        $res = $this->db->get('divisi');
 
         return $res->row();
     }
 
     public function insertData($data)
     {
-        $this->db->insert('zona', $data);
+        $this->db->insert('divisi', $data);
     }
 
     public function updateData($data, $kondisi)
     {
-        $this->db->update('zona', $data, $kondisi);
+        $this->db->update('divisi', $data, $kondisi);
+    }
+
+    public function deleteData($id)
+    {
+        $this->db->where('id',$id);
+        $this->db->delete('divisi');
     }
 }

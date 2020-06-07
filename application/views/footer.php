@@ -91,6 +91,7 @@
         });
         $('#mdate1').bootstrapMaterialDatePicker({ weekStart : 0, time: false });
         $('#mdate2').bootstrapMaterialDatePicker({ weekStart : 0, time: false });
+        
     </script>
 </body>
 

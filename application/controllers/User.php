@@ -29,27 +29,70 @@ class User extends CI_Controller {
         $this->load->view('footer');
     }
 
+    public function create()
+    {
+
+        $this->data['breadcrumb'] = "User";
+        $this->data['divisi']     = $this->db->get('divisi')->result();
+        $this->data['zona']       = $this->db->get('zona')->result();
+        $this->data['role']       = $this->db->get('role')->result();
+        $this->load->view('header', $this->data);
+        $this->load->view('user/create', $this->data);
+        $this->load->view('footer');
+    }
+
     public function show($id)
     {
-        $this->data['user'] = $this->User_model->ambilDataById();
-
+        $this->data['user'] = $this->User_model->ambilDataById($id);
         $this->load->view('header');
         $this->load->view('user/show', $this->data);
         $this->load->view('footer');
     }
 
+    public function edit($id)
+    {
+        $this->data['user'] = $this->User_model->ambilDataById($id);
+        $this->data['divisi']     = $this->db->get('divisi')->result();
+        $this->data['zona']       = $this->db->get('zona')->result();
+        $this->data['role']       = $this->db->get('role')->result();
+
+        $this->load->view('header');
+        $this->load->view('user/edit', $this->data);
+        $this->load->view('footer');
+    }
+
     public function store()
     {
+        $request = $this->input->post();
+        $request['id']         = strtoupper($this->uuid->v4());
+        $request['password']   = md5('1234');
+        $request['created_at'] = date('Y-m-d H:i:s');
+        $request['updated_at'] = date('Y-m-d H:i:s');
 
+        $insert = $this->User_model->insertData($request);
+        $this->session->set_flashdata('success','Insert data success');
+
+        redirect('user');
     }
 
     public function update()
     {
+        $request = $this->input->post();
+        $request['updated_at'] = date('Y-m-d H:i:s');
+        $update  = $this->User_model->updateData($request,['id' => $request['id']]);
 
+        $this->session->set_flashdata('success','Update data success');
+
+        redirect('user');
     }
 
     public function delete()
     {
+        $id = $this->input->post('id');
+
+        $delete = $this->User_model->deleteData($id);
+
+        $this->session->set_flashdata('success','Delete data success');
 
     }
 

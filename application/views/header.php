@@ -26,6 +26,7 @@
     <!-- You can change the theme colors from here -->
     <link href="<?= base_url() ?>assets/css/colors/blue.css" id="theme" rel="stylesheet">
     <link href="<?= base_url() ?>assets/material-pro/plugins/toast-master/css/jquery.toast.css" rel="stylesheet">
+    <link href="<?= base_url() ?>assets/material-pro/plugins/sweetalert/sweetalert.css" rel="stylesheet" type="text/css">
     <link href="<?= base_url() ?>assets/material-pro/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -42,6 +43,7 @@
     <!-- Bootstrap tether Core JavaScript -->
     <script src="<?= base_url(); ?>assets/material-pro/plugins/bootstrap/js/popper.min.js"></script>
     <script src="<?= base_url(); ?>assets/material-pro/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="<?= base_url() ?>assets/material-pro/plugins/sweetalert/sweetalert.min.js"></script>
 </head>
 
 <body class="fix-header fix-sidebar card-no-border">

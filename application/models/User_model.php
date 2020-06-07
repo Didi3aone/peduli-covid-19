@@ -38,7 +38,16 @@ class User_model extends CI_Model {
 
     public function ambilSemuaData()
     {
-        $this->db->select('*');
+        $this->db->select('
+            users.id as user_id,
+            zona.color,
+            users.fullname,
+            users.employee_id,
+            users.divisi,
+            users.tempat_tinggal,
+            users.transportasi_normal,
+            users.transportasi_wfh
+        ');
         $this->db->from('users');
         $this->db->join('zona','zona.address = users.tempat_tinggal','left');
         $this->db->where('zona.valid_to >= ', date('Y-m-d'));
@@ -85,7 +94,6 @@ class User_model extends CI_Model {
     public function insertData($data)
     {
         $this->db->insert('users', $data);
-        return $this->db->insert_id();
     }
 
     public function updateData($data, $kondisi)

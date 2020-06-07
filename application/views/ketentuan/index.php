@@ -26,7 +26,11 @@
                                 <td><?= $rows->suhu_start." ".$rows->logic." ".$rows->suhu_end ?></td>
                                 <td><?= $rows->status ?></td>
                                 <td><?= $rows->rekomendasi ?></td>
-                                <td></td>
+                                <td>
+                                    <a class="btn btn-primary btn-xs" href="<?= site_url('ketentuan/edit/'.$rows->id) ?>">
+                                        <i class="fa fa-pencil"></i> Edit
+                                    </a>
+                                </td>
                             </tr>
                             <?php endforeach; ?>
                         </tbody>
