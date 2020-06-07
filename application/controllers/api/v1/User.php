@@ -12,6 +12,23 @@ class User extends RestController {
         $this->load->library('uuid');
     }
 
+    public function user_all_get()
+    {
+        $all = $this->User_model->all_data();
+
+        if( empty($all) ) {
+            $this->response( [
+                'status' => 404,
+                'message' => 'Data kosong'
+            ], 404 );
+        } else {
+            $this->response( [
+                'status' => 200,
+                'data' => $all
+            ], 200 );
+        }
+    }
+
     public function login_post()
     {
         $username = $this->post('username');

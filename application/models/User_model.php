@@ -46,6 +46,33 @@ class User_model extends CI_Model {
         return $hasil->result();
     }
 
+    public function all_data()
+    {
+        $this->db->select(
+            '
+            users.id,
+            users.employee_id,
+            users.username,
+            users.fullname,
+            users.password,
+            users.divisi,
+            users.tempat_tinggal,
+            users.transportasi_normal,
+            users.transportasi_wfh,
+            users.role_id,
+            role.role_name as level,
+            zona.address as zona,
+            zona.zona_status'
+        );
+        $this->db->from('users');
+        $this->db->join('zona','zona.address = users.tempat_tinggal','left');
+        $this->db->join('role','role.id = users.role_id');
+        $this->db->where('is_active', 1);
+
+        $hasil = $this->db->get()->result();
+        return $hasil;
+    }
+
     public function ambilDataById($id)
     {
         $this->db->select('*');
