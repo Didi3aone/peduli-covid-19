@@ -31,6 +31,7 @@ class Informasi extends RestController {
                     'link' => base_url()."assets/uploads/informasi/".$row->filename,
                     'category' => $row->category,
                     'category_id' => $row->category_id,
+                    'title'       => $row->title
                 ];
             }
             $this->response( [

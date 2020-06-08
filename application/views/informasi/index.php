@@ -10,6 +10,7 @@
                         <thead>
                             <tr>
                                 <th>#</th>
+                                <th>Title</th>
                                 <th>Category</th>
                                 <th>Image</th>
                                 <th></th>
@@ -22,6 +23,7 @@
                             ?>
                             <tr>
                                 <td><?= $i++; ?></td>
+                                <td><?= $rows->title ?></td>
                                 <td><?= $rows->category ?></td>
                                 <td><img src="<?= base_url('assets/uploads/informasi/'.$rows->filename) ?>" width=100 height=100></td>
                                 <td>

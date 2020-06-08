@@ -11,6 +11,14 @@
                         <div class="row p-t-20">
                             <div class="col-md-12">
                                 <div class="form-group">
+                                    <label class="control-label">Judul </label>
+                                    <input type="text" id="title" name="title" class="form-control" placeholder="Judul">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row p-t-20">
+                            <div class="col-md-12">
+                                <div class="form-group">
                                     <label class="control-label">Kategori </label>
                                     <select name="category_id" class="form-control">
                                         <option>Select</option>

@@ -57,9 +57,9 @@ class Informasi extends CI_Controller {
             //Set the config
             $config['upload_path'] = 'assets/uploads/informasi/'; //Use relative or absolute path
             $config['allowed_types'] = '*'; 
-            $config['max_size'] = '100';
-            $config['max_width'] = '1024';
-            $config['max_height'] = '768';
+            $config['max_size'] = '*';
+            $config['max_width'] = '*';
+            $config['max_height'] = '*';
             $config['overwrite'] = FALSE; //If the file exists it will be saved with a progressive number appended
            
             // print_r($config);die;
