@@ -56,8 +56,43 @@ class User extends RestController {
         }
     }   
 
-   public function checkSuhu_post()
-   {
+    public function changePassword_post()
+    {
+        $employeeId     = $this->post('employeeId');
+        $passOld        = $this->post('passwordOld');
+        $passNew        = $this->post('passwordNew');
+        $passNewConf    = $this->post('passwordNewConf');
+
+        $checkUser = $this->User_model->ambilDataByEmployeeId($employeeId);
+        // echo $this->db->last_query();die;
+        if( empty($checkUser) ) {
+            $this->response( [
+                'status'   => '404',
+                'message'  => 'User tidak ditemukan'
+            ], 404 );
+        } else {
+            if( md5($passOld) != $checkUser->password ) {
+                $this->response( [
+                    'status'   => '500',
+                    'message'  => 'Password lama yg diinput salah'
+                ], 500 );
+            } else {
+                $updatePass = [
+                    'password' => md5($passNew)
+                ];
+
+                $this->User_model->updateData($updatePass,['employee_id' => $employeeId]);
+
+                $this->response( [
+                    'status'   => '200',
+                    'message'  => 'Ganti password sukses'
+                ], 200 );
+            }
+        }
+    }
+
+    public function checkSuhu_post()
+    {
         $suhu        = $this->post('suhu');
         $zona        = $this->post('zona');
         $employee_id = $this->post('employee_id');

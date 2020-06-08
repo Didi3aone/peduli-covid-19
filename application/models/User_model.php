@@ -91,6 +91,15 @@ class User_model extends CI_Model {
         return $hasil->row();
     }
 
+    public function ambilDataByEmployeeId($id)
+    {
+        $this->db->select('*');
+        $this->db->from('users');
+        $this->db->where('employee_id', $id);
+        $hasil = $this->db->get();
+        return $hasil->row();
+    }
+
     public function insertData($data)
     {
         $this->db->insert('users', $data);
