@@ -124,7 +124,7 @@ class User extends RestController {
         if( $checkSuhuHariIni ) {
             $this->response( [
                 'status' => 300,
-                'message' => 'Anda sudah melakukan pengecekan suhu hari ini .'
+                'message' => 'anda sudah lapor suhu hari ini.'
             ], 500 );
         } else {
             if( $suhu >= '38.2' OR $suhu > '38.2') {
