@@ -83,52 +83,63 @@ class User extends RestController {
         
         $userId = $this->db->get_where('users',['employee_id' => $employee_id])->row();
 
-        if( $suhu >= '38.2' OR $suhu > '38.2') {
-            $suhuTinggi = "SELECT 
-                            ketentuan.id,
-                            ketentuan.rekomendasi,
-                            zona_status.status as zona
-                        from ketentuan 
-                        join zona_status on zona_status.id = ketentuan.zona_status_id
-                        where suhu_start >= '38.2' and suhu_start <= $suhu and zona_status_id = $zonaStatus ";
-            $dataSuhu = $this->db->query($suhuTinggi)->row();
-            $this->db->insert('daily_check_suhu',[
-                'id' => strtoupper($this->uuid->v4()),
-                'suhu' => $suhu,
-                'user_id' => $userId->id,
-                'check_date' => date('Y-m-d H:i:s'),
-                'ketentuan_id' => $dataSuhu->id,
-                'created_at'   => date('Y-m-d H:i:s'),
-                'updated_at'   => date('Y-m-d H:i:s'),
-            ]);
-        } elseif($suhu < '34' or $suhu <= '34.4') {
+        $checkSuhuHariIni = $this->db->get_where('daily_check_suhu',['user_id' => $userId->id,'DATE(check_date)' => date('Y-m-d')])->row();
+        $dataSuhu = [];
+
+        if( $checkSuhuHariIni ) {
             $this->response( [
-                'status'   => '500',
-                'message'  => 'Cek kembali inputan anda'
+                'status' => 300,
+                'message' => 'Anda sudah melakukan pengecekan suhu hari ini .'
             ], 500 );
         } else {
-
-            $suhuRendah = "SELECT 
+            if( $suhu >= '38.2' OR $suhu > '38.2') {
+                $suhuTinggi = "SELECT 
                                 ketentuan.id,
                                 ketentuan.rekomendasi,
                                 zona_status.status as zona
-                        from ketentuan 
-                        join zona_status on zona_status.id = ketentuan.zona_status_id
-                        where $suhu
-                        BETWEEN suhu_start  AND suhu_end 
-                        and zona_status_id = $zonaStatus";
-            $dataSuhu  = $this->db->query($suhuRendah)->row();
+                            from ketentuan 
+                            join zona_status on zona_status.id = ketentuan.zona_status_id
+                            where suhu_start >= '38.2' and suhu_start <= $suhu and zona_status_id = $zonaStatus ";
+                $dataSuhu = $this->db->query($suhuTinggi)->row();
+                $this->db->insert('daily_check_suhu',[
+                    'id' => strtoupper($this->uuid->v4()),
+                    'suhu' => $suhu,
+                    'user_id' => $userId->id,
+                    'check_date' => date('Y-m-d H:i:s'),
+                    'ketentuan_id' => $dataSuhu->id,
+                    'created_at'   => date('Y-m-d H:i:s'),
+                    'updated_at'   => date('Y-m-d H:i:s'),
+                ]);
+            } elseif($suhu < '34' or $suhu <= '34.4') {
+                $this->response( [
+                    'status'   => '500',
+                    'message'  => 'Cek kembali inputan anda'
+                ], 500 );
+            } else {
 
-            $this->db->insert('daily_check_suhu',[
-                'id' => strtoupper($this->uuid->v4()),
-                'suhu' => $suhu,
-                'user_id' => $userId->id,
-                'check_date' => date('Y-m-d H:i:s'),
-                'ketentuan_id' => $dataSuhu->id,
-                'created_at'   => date('Y-m-d H:i:s'),
-                'updated_at'   => date('Y-m-d H:i:s'),
-            ]);
+                $suhuRendah = "SELECT 
+                                    ketentuan.id,
+                                    ketentuan.rekomendasi,
+                                    zona_status.status as zona
+                            from ketentuan 
+                            join zona_status on zona_status.id = ketentuan.zona_status_id
+                            where $suhu
+                            BETWEEN suhu_start  AND suhu_end 
+                            and zona_status_id = $zonaStatus";
+                $dataSuhu  = $this->db->query($suhuRendah)->row();
+
+                $this->db->insert('daily_check_suhu',[
+                    'id' => strtoupper($this->uuid->v4()),
+                    'suhu' => $suhu,
+                    'user_id' => $userId->id,
+                    'check_date' => date('Y-m-d H:i:s'),
+                    'ketentuan_id' => $dataSuhu->id,
+                    'created_at'   => date('Y-m-d H:i:s'),
+                    'updated_at'   => date('Y-m-d H:i:s'),
+                ]);
+            }
         }
+
 
         if( $dataSuhu ) {
             $this->response( [
