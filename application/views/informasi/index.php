@@ -25,7 +25,7 @@
                                 <td><?= $i++; ?></td>
                                 <td><?= $rows->title ?></td>
                                 <td><?= $rows->category ?></td>
-                                <td><img src="<?= base_url('assets/uploads/informasi/'.$rows->filename) ?>" width=100 height=100></td>
+                                <td><a href="<?= base_url('assets/uploads/informasi/'.$rows->filename) ?>"> <?= $rows->filename ?>  </a></td>
                                 <td>
                                     <a class="btn btn-danger delete btn-xs" href="javascript:void(0)" data-id="<?= $rows->id ?>">
                                         <i class="fa fa-trash"></i> Delete
