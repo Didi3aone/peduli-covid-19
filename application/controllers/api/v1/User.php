@@ -187,5 +187,34 @@ class User extends RestController {
                 'message'  => 'Cek kembali inputan anda'
             ], 500 );
         }
-   }
+    }
+
+    public function userForgotPass_post()
+    {
+        $employeeId     = $this->post('employeeId');
+        $passNew        = $this->post('passwordNew');
+        $passNewConf    = $this->post('passwordNewConf');
+
+        $checkUser = $this->User_model->ambilDataByEmployeeId($employeeId);
+        // echo $this->db->last_query();die;
+        if( empty($checkUser) ) {
+            $this->response( [
+                'status'   => '404',
+                'message'  => 'User tidak ditemukan'
+            ], 404 );
+        } else {
+            
+            $updatePass = [
+                'password' => md5($passNew)
+            ];
+
+            $this->User_model->updateData($updatePass,['employee_id' => $employeeId]);
+
+            $this->response( [
+                'status'   => '200',
+                'message'  => 'Ganti password sukses'
+            ], 200 );
+            
+        }
+    }
 }
